@@ -1,4 +1,5 @@
 import datetime
+from logging.handlers import TimedRotatingFileHandler
 
 
 class Logger:

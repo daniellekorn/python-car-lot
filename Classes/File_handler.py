@@ -41,6 +41,10 @@ class FileHandler:
             except ValueError as e:
                 return e
 
+    @staticmethod
+    def data_join(**kwargs):
+        pass
+
 
 # Test for load
 # FileHandler.load_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User")
