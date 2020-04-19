@@ -1,0 +1,11 @@
+FileHandler:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def load_from_csv(file_name):
+        pass
+
+    @staticmethod
+    def append_to_csv(file_name,data):
+        pass

@@ -23,3 +23,8 @@ class User:
         else:
             raise TypeError("Password must be type string")
 
+    @classmethod
+    def user_auth(cls, name, password):
+        # //check if user in csv file
+        # //if so return "role"
+        # //if not, return false
