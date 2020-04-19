@@ -32,7 +32,8 @@ class User:
             with open("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User") as file:
                 csv_reader = DictReader(file)
                 for user in csv_reader:
-                    if name == user['last'] and password == user['password']:
+                    if (name == user['last'] or name == user['first'] or name == user['first'] + " " + user['last']) \
+                            and password == user['password']:
                         return f"User role: {user['role']}"
                     else:
                         continue
@@ -50,3 +51,5 @@ print(User.user_auth('Clampe', 'gU1F1KqG'))
 print(User.user_auth('Danielle', '1234'))
 print(User.user_auth('Eliyahu', 'Rfh320Y'))
 print(User.user_auth('Brame', 'eU5SUpIfTv5'))
+print(User.user_auth('Nedda', 'mc1NeDS75DI6'))
+print(User.user_auth('Cassandry Baskerfield', '49cJqO8CuM'))
