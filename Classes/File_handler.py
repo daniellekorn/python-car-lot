@@ -24,16 +24,37 @@ class FileHandler:
         with open(file_name) as file:
             csv_reader = reader(file)
             existing_headers = list(csv_reader)[0]
-        with open(file_name, "a", newline='') as file:
+        with open(file_name) as file:
+            csv_reader = reader(file)
+            existing_ids = []
+            for item in list(csv_reader)[1:]:
+                existing_ids.append(item[0])
+        with open(file_name, "a") as file:
             try:
                 csv_writer = DictWriter(file, fieldnames=existing_headers)
-                csv_writer.writerow(data)
+                if "user_id" not in data:
+                    raise ValueError("ValueError: User must have valid ID")
+                elif data["user_id"] in existing_ids:
+                    raise ValueError("ValueError: ID taken. Provide new, valid user ID.")
+                else:
+                    csv_writer.writerow(data)
             except ValueError as e:
                 return e
 
 
-# Test
+# Test for load
 # FileHandler.load_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User")
-FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
-                "first": "Garfield"
-})
+
+# Tests for append
+print(FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
+                "user_id": "b54d22f0-8b80-491f-979a-5dd1a1c15253",
+                "first": "Garfield",
+                "last": "Binton",
+                "password": "c2VP9QhHu8c1"
+}))
+print(FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
+                "user_id": "b34d22d0-8b80-491f-979a-5dd1a1c15253",
+                "first": "Samuel",
+                "last": "Berger",
+                "password": "c2VP9QhHu8c1"
+}))
