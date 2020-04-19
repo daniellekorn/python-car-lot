@@ -1,4 +1,6 @@
+from csv import reader
 from csv import DictReader
+from csv import writer, DictWriter
 
 
 class FileHandler:
@@ -19,8 +21,19 @@ class FileHandler:
 
     @staticmethod
     def append_to_csv(file_name, data):
-        pass
+        with open(file_name) as file:
+            csv_reader = reader(file)
+            existing_headers = list(csv_reader)[0]
+        with open(file_name, "a", newline='') as file:
+            try:
+                csv_writer = DictWriter(file, fieldnames=existing_headers)
+                csv_writer.writerow(data)
+            except ValueError as e:
+                return e
 
 
 # Test
-FileHandler.load_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User")
+# FileHandler.load_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User")
+FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
+                "first": "Garfield"
+})
