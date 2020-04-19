@@ -18,7 +18,7 @@ class FileHandler:
             print("OSError: Bad file descriptor. Type must be string.")
 
     @staticmethod
-    def append_to_csv(file_name,data):
+    def append_to_csv(file_name, data):
         pass
 
 
