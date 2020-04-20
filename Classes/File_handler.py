@@ -57,14 +57,14 @@ class FileHandler:
         else:
             current_data = [row for row in file_data]
             updated_data = func(file_data, user_id, new_data)
-            # with open(self._csv_path, "w") as output:
-            #     writer = csv.writer(output)
-            #     for item in updated_data:
-            #         writer.writerow(item)
-            # if len(current_data) > len(updated_data):
-            #     return True
-            # else:
-            #     return False
+            with open(self._csv_path, "w") as output:
+                writer = csv.writer(output)
+                for item in updated_data:
+                    writer.writerow(item)
+            if updated_data != current_data:
+                return True
+            else:
+                return False
 
     @staticmethod
     def remove_from_csv(file_data, user_id, new_data):
@@ -81,5 +81,6 @@ class FileHandler:
             return not_matching_members
 
 
-users = FileHandler("User")
-print(users.loop_through_and(FileHandler.update_csv, 'af364e96-3d68-4609-9cfd-641b4e2062f0', "hello"))
+# Test
+# users = FileHandler("User")
+# print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
