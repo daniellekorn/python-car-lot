@@ -72,7 +72,7 @@ class FileHandler:
         return updated_data
 
 
-# def update_csv(user_id, row, file_data):
-users = FileHandler("User")
+    # def update_csv(user_id, row, file_data):
 
-# print(FileHandler.loop_through_and(FileHandler.remove_from_csv, "/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", '5224f411-57aa-4dd2-9cfe-7b76cb92ae3c'))
+users = FileHandler("User")
+print(users.loop_through_and(FileHandler.remove_from_csv, '5224f411-57aa-4dd2-9cfe-7b76cb92ae3c'))
