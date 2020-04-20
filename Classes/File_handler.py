@@ -23,11 +23,10 @@ class FileHandler:
     def append_to_csv(file_name, data):
         with open(file_name) as file:
             csv_reader = reader(file)
-            existing_headers = list(csv_reader)[0]
-        with open(file_name) as file:
-            csv_reader = reader(file)
+            file_data = list(csv_reader)
+            existing_headers = file_data[0]
             existing_ids = []
-            for item in list(csv_reader)[1:]:
+            for item in file_data[1:]:
                 existing_ids.append(item[0])
         with open(file_name, "a") as file:
             try:
