@@ -2,13 +2,15 @@ from csv import reader
 from csv import DictReader
 from csv import DictWriter
 import csv
+import os
 from pathlib import Path
 import os
 
 
 class FileHandler:
-    def __init__(self, file_name):
+    def __init__(self, file_name=""):
         self.file_name = file_name
+        self.cur_dir = os.getcwd()
 
     @staticmethod
     def load_from_csv(file_name):
@@ -56,32 +58,17 @@ class FileHandler:
 
     @staticmethod
     def remove_from_csv(file_name, user_id):
-        with open(file_name) as inp, open(file_name + "test", "w") as output:
+        with open(file_name) as inp:
             csv_reader = reader(inp)
+            file_data = list(csv_reader)
+            current_data = [row for row in file_data]
+            updated_data = [row for row in file_data if row[0] != user_id]
+        with open(file_name, "w") as output:
             writer = csv.writer(output)
-            for row in csv_reader:
-                if row[0] != user_id:
-                    writer.writerow(row)
-                else:
-                    print(row[0])
-
-
-# Test for load
-# FileHandler.load_from_csv("User")
-
-# # Tests for append
-# print(FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
-#                 "user_id": "b54d22f0-8b80-491f-979a-5dd1a1c15253",
-#                 "first": "Garfield",
-#                 "last": "Binton",
-#                 "password": "c2VP9QhHu8c1"
-# }))
-# print(FileHandler.append_to_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", {
-#                 "user_id": "b34d22d0-8b80-491f-979a-5dd1a1c15253",
-#                 "first": "Samuel",
-#                 "last": "Berger",
-#                 "password": "c2VP9QhHu8c1"
-# }))
-
-# Test for remove
-print(FileHandler.remove_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", "4d9015e2-40d1-4911-81b8-2e0495b0a961"))
+            for item in updated_data:
+                writer.writerow(item)
+        # checks if id was found and deleted properly
+        if len(current_data) > len(updated_data):
+            return True
+        else:
+            return False
