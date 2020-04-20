@@ -15,9 +15,9 @@ class FileHandler:
     def load_from_csv(self):
         try:
             with open(self._csv_path) as file:
-                csv_reader = DictReader(file)
-                for row in csv_reader:
-                    print(row)
+                csv_reader = reader(file)
+                file_data = list(csv_reader)
+                return file_data
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
@@ -49,9 +49,7 @@ class FileHandler:
 
     def loop_through_and(self, func, user_id, new_data=""):
         try:
-            with open(self._csv_path) as inp:
-                csv_reader = reader(inp)
-                file_data = list(csv_reader)
+            file_data = self.load_from_csv()
         except FileNotFoundError:
             print("FileNotFoundError: Please input an appropriate path.")
         else:
@@ -82,5 +80,5 @@ class FileHandler:
 
 
 # Test
-# users = FileHandler("User")
-# print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
+users = FileHandler("User")
+print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
