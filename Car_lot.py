@@ -17,11 +17,12 @@ class CarLot:
     def load_employee_data(self, *args):
         pass
 
+    # need to return t/f and add error handling
     def update_salary_by_name(self, employee_salary, name):
         file_data = self.user_handler.load_from_csv()
         all_employees = []
         for row in file_data:
-            if row[2] == name or f"{row[1]} {row[2]}" == name:
+            if row[2].lower() == name.lower() or f"{row[1]} {row[2]}".lower() == name.lower():
                 new_data = [item if index != 5 else employee_salary for index, item in enumerate(row)]
                 all_employees.append(new_data)
             else:
@@ -34,4 +35,4 @@ class CarLot:
 # CarLot.add_to_fleet("/Users/daniellekorn/Downloads/mock.csv")
 lot = CarLot()
 print(lot.update_salary_by_name(56, 'sam'))
-print(lot.update_salary_by_name(54, 'Dorgon'))
+print(lot.update_salary_by_name(54, 'dorgon'))
