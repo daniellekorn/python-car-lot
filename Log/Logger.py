@@ -1,7 +1,6 @@
 import datetime
 import os
-import logging
-from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
 
 
 class Logger:
@@ -10,10 +9,8 @@ class Logger:
 
     def add_to_log(self, msg):
         try:
-            log_dir = os.path.dirname(os.path.realpath(__file__))
-            path = f"{log_dir}{os.sep}{self.file}"
-            print(path)
-            f = open(path, "a")
+            path = Path(f"//{__file__}")
+            f = open(f"{path.parent}{os.sep}{self.file}", "a")
         except Exception as e:
             print(str(e))
         else:
@@ -24,5 +21,5 @@ class Logger:
 # Tests
 messages = Logger("msg_log.log")
 messages.add_to_log("test")
-messages.add_to_log("test two")
-messages.add_to_log("test three")
+# messages.add_to_log("test two")
+# messages.add_to_log("test three")
