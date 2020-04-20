@@ -52,7 +52,7 @@ class FileHandler:
         with open(file_name) as file:
             csv_reader = reader(file)
             for row in csv_reader:
-                print(func(*args))
+                func(row, *args)
 
     @staticmethod
     def remove_from_csv(file_name, user_id):
@@ -64,8 +64,6 @@ class FileHandler:
                     writer.writerow(row)
                 else:
                     print(row[0])
-                return True
-
 
 
 # Test for load
@@ -84,4 +82,6 @@ class FileHandler:
 #                 "last": "Berger",
 #                 "password": "c2VP9QhHu8c1"
 # }))
+
+# Test for remove
 print(FileHandler.remove_from_csv("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", "4d9015e2-40d1-4911-81b8-2e0495b0a961"))
