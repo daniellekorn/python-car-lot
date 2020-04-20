@@ -1,7 +1,11 @@
 from csv import DictReader
+from file_handler import FileHandler
 
 
-class User():
+class User:
+    user_file_handler = FileHandler("User")
+    _users = user_file_handler.get_data()
+
     def __init__(self, user_id, first, last, password):
         self._user_id = user_id
         self.first = first
@@ -36,7 +40,7 @@ class User():
     @staticmethod
     def user_auth(name, password):
         try:
-            with open("/Users/daniellekorn/PycharmProjects/car_lot/CSV/User") as file:
+            with open("/CSV/User") as file:
                 csv_reader = DictReader(file)
                 for user in csv_reader:
                     if (name == user['last'] or name == user['first'] or name == user['first'] + " " + user['last']) \
@@ -51,17 +55,4 @@ class User():
             print("OSError: Bad file descriptor. Type must be string.")
 
 
-# # Tests
-# print(User.user_auth('Hans', 'fr6YSKFLd'))
-# print(User.user_auth('Hans', 'fr6YSKF'))
-# print(User.user_auth('Clampe', 'gU1F1KqG'))
-# print(User.user_auth('Danielle', '1234'))
-# print(User.user_auth('Eliyahu', 'Rfh320Y'))
-# print(User.user_auth('Brame', 'eU5SUpIfTv5'))
-# print(User.user_auth('Nedda', 'mc1NeDS75DI6'))
-# print(User.user_auth('Cassandry Baskerfield', '49cJqO8CuM'))
-
-# Test for new check password func
-eliyahu = User(34366, 'eliyahu', 'korn', '021693!!')
-eliyahu.password = 'success'
-print(eliyahu.password)
+print(User._users)

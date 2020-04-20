@@ -1,5 +1,4 @@
 from csv import reader
-from csv import DictReader
 from csv import DictWriter
 from pathlib import Path
 import os
@@ -12,12 +11,11 @@ class FileHandler:
     def __init__(self, file_name=""):
         if self.__csv_data is None:
             self.__csv_data = []
-        main_dir = str(Path(__file__).parent.parent)
+        main_dir = str(Path(__file__).parent)
         self.file_name = file_name
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
 
-    @property
-    def data(self):
+    def get_data(self):
         return self.__csv_data
 
     def load_from_csv(self):
@@ -91,6 +89,7 @@ class FileHandler:
             return not_matching_members
 
 
-# Test
-users = FileHandler("User")
-print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
+# # Test
+# users = FileHandler("user")
+# print(users._csv_path)
+# print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
