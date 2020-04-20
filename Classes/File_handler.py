@@ -24,13 +24,11 @@ class FileHandler:
             print("OSError: Bad file descriptor. Type must be string.")
 
     def append_to_csv(self, data):
-        with open(self._csv_path) as file:
-            csv_reader = reader(file)
-            file_data = list(csv_reader)
-            existing_headers = file_data[0]
-            existing_ids = []
-            for item in file_data[1:]:
-                existing_ids.append(item[0])
+        file_data = self.load_from_csv()
+        existing_headers = file_data[0]
+        existing_ids = []
+        for item in file_data[1:]:
+            existing_ids.append(item[0])
         with open(self._csv_path, "a") as file:
             try:
                 csv_writer = DictWriter(file, fieldnames=existing_headers)

@@ -1,8 +1,7 @@
 from csv import DictReader
 
 
-class User:
-
+class User():
     def __init__(self, user_id, first, last, password):
         self._user_id = user_id
         self.first = first
