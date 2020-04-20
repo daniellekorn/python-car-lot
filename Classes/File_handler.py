@@ -7,21 +7,34 @@ import csv
 
 
 class FileHandler:
+    __csv_data = None
+
     def __init__(self, file_name=""):
+        if self.__csv_data is None:
+            self.__csv_data = []
         main_dir = str(Path(__file__).parent.parent)
         self.file_name = file_name
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
+
+    @property
+    def data(self):
+        return self.__csv_data
 
     def load_from_csv(self):
         try:
             with open(self._csv_path) as file:
                 csv_reader = reader(file)
                 file_data = list(csv_reader)
+                for row in file_data:
+                    self.__csv_data.append(row)
                 return file_data
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
+
+    def get_data(self):
+        return self.__csv_data
 
     def append_to_csv(self, data):
         file_data = self.load_from_csv()
@@ -53,6 +66,7 @@ class FileHandler:
         else:
             current_data = [row for row in file_data]
             updated_data = func(file_data, user_id, new_data)
+            self.__csv_data = [item for item in updated_data]
             with open(self._csv_path, "w") as output:
                 writer = csv.writer(output)
                 for item in updated_data:
