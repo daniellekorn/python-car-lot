@@ -34,6 +34,12 @@ class FileHandler:
     def get_data(self):
         return self.__csv_data
 
+    def write_to_csv(self, updated_data):
+        with open(self._csv_path, "w") as output:
+            writer = csv.writer(output)
+            for item in updated_data:
+                writer.writerow(item)
+
     def append_to_csv(self, data):
         file_data = self.load_from_csv()
         existing_headers = file_data[0]
@@ -65,17 +71,14 @@ class FileHandler:
             current_data = [row for row in file_data]
             updated_data = func(file_data, user_id, new_data)
             self.__csv_data = [item for item in updated_data]
-            with open(self._csv_path, "w") as output:
-                writer = csv.writer(output)
-                for item in updated_data:
-                    writer.writerow(item)
+            self.write_to_csv(updated_data)
             if updated_data != current_data:
                 return True
             else:
                 return False
 
     @staticmethod
-    def remove_from_csv(file_data, user_id, new_data):
+    def remove_from_csv(file_data, user_id, new_data=""):
         updated_data = [row for row in file_data if row[0] != user_id]
         return updated_data
 
@@ -87,6 +90,7 @@ class FileHandler:
             revised_user = [user_id, new_data]
             not_matching_members.append(revised_user)
             return not_matching_members
+
 
 
 # # Test

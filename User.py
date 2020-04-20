@@ -3,7 +3,7 @@ from file_handler import FileHandler
 
 
 class User:
-    user_file_handler = FileHandler("User")
+    user_file_handler = FileHandler("user.csv")
     _users = user_file_handler.get_data()
 
     def __init__(self, user_id, first, last, password):
