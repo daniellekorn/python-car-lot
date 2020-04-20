@@ -50,14 +50,7 @@ class FileHandler:
         pass
 
     @staticmethod
-    def loop_through_and(self, file_name, func, *args):
-        with open(file_name) as file:
-            csv_reader = reader(file)
-            for row in csv_reader:
-                func(row, *args)
-
-    @staticmethod
-    def remove_from_csv(file_name, user_id):
+    def loop_through_and(func, file_name, user_id):
         try:
             with open(file_name) as inp:
                 csv_reader = reader(inp)
@@ -65,16 +58,21 @@ class FileHandler:
         except FileNotFoundError:
             print("FileNotFoundError: Please input an appropriate path.")
         else:
-            current_data = [row for row in file_data]
-            updated_data = [row for row in file_data if row[0] != user_id]
+            current_data, updated_data = func(user_id, file_data)
             with open(file_name, "w") as output:
                 writer = csv.writer(output)
                 for item in updated_data:
                     writer.writerow(item)
-                # checks if id was found and deleted properly
             if len(current_data) > len(updated_data):
                 return True
             else:
                 return False
 
 
+def remove_from_csv(user_id, file_data):
+    current_data = [row for row in file_data]
+    updated_data = [row for row in file_data if row[0] != user_id]
+    return current_data, updated_data
+
+
+# print(FileHandler.loop_through_and(remove_from_csv, "/Users/daniellekorn/PycharmProjects/car_lot/CSV/User", '5224f411-57aa-4dd2-9cfe-7b76cb92ae3c'))
