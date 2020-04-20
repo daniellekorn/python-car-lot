@@ -58,17 +58,23 @@ class FileHandler:
 
     @staticmethod
     def remove_from_csv(file_name, user_id):
-        with open(file_name) as inp:
-            csv_reader = reader(inp)
-            file_data = list(csv_reader)
+        try:
+            with open(file_name) as inp:
+                csv_reader = reader(inp)
+                file_data = list(csv_reader)
+        except FileNotFoundError:
+            print("FileNotFoundError: Please input an appropriate path.")
+        else:
             current_data = [row for row in file_data]
             updated_data = [row for row in file_data if row[0] != user_id]
-        with open(file_name, "w") as output:
-            writer = csv.writer(output)
-            for item in updated_data:
-                writer.writerow(item)
-        # checks if id was found and deleted properly
-        if len(current_data) > len(updated_data):
-            return True
-        else:
-            return False
+            with open(file_name, "w") as output:
+                writer = csv.writer(output)
+                for item in updated_data:
+                    writer.writerow(item)
+                # checks if id was found and deleted properly
+            if len(current_data) > len(updated_data):
+                return True
+            else:
+                return False
+
+
