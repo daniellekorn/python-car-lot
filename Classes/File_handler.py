@@ -47,7 +47,7 @@ class FileHandler:
     def data_join(**kwargs):
         pass
 
-    def loop_through_and(self, func, user_id):
+    def loop_through_and(self, func, user_id, new_data=""):
         try:
             with open(self._csv_path) as inp:
                 csv_reader = reader(inp)
@@ -56,23 +56,30 @@ class FileHandler:
             print("FileNotFoundError: Please input an appropriate path.")
         else:
             current_data = [row for row in file_data]
-            updated_data = func(user_id, file_data)
-            with open(self._csv_path, "w") as output:
-                writer = csv.writer(output)
-                for item in updated_data:
-                    writer.writerow(item)
-            if len(current_data) > len(updated_data):
-                return True
-            else:
-                return False
+            updated_data = func(file_data, user_id, new_data)
+            # with open(self._csv_path, "w") as output:
+            #     writer = csv.writer(output)
+            #     for item in updated_data:
+            #         writer.writerow(item)
+            # if len(current_data) > len(updated_data):
+            #     return True
+            # else:
+            #     return False
 
     @staticmethod
-    def remove_from_csv(user_id, file_data):
+    def remove_from_csv(file_data, user_id, new_data):
         updated_data = [row for row in file_data if row[0] != user_id]
         return updated_data
 
+    @staticmethod
+    def update_csv(file_data, user_id, new_data):
+        not_matching_members = [row for row in file_data if row[0] != user_id]
+        wanted_user = [row for row in file_data if row[0] == user_id]
+        if wanted_user:
+            revised_user = [user_id, new_data]
+            not_matching_members.append(revised_user)
+            return not_matching_members
 
-    # def update_csv(user_id, row, file_data):
 
 users = FileHandler("User")
-print(users.loop_through_and(FileHandler.remove_from_csv, '5224f411-57aa-4dd2-9cfe-7b76cb92ae3c'))
+print(users.loop_through_and(FileHandler.update_csv, 'af364e96-3d68-4609-9cfd-641b4e2062f0', "hello"))
