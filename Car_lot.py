@@ -63,13 +63,22 @@ class CarLot:
     def get_fleet_size(self):
         return len(self.__vehicles)
 
+    def get_all_cars_by_brand(self, brand):
+        brand_pos = definitions.file_data.get("vehicle").get("columns").index("brand")
+        wanted = [row for row in self.__vehicles if row[brand_pos] == brand]
+        return wanted
 
 
+lot = CarLot()
 # Test cases Add to Fleet
-# lot = CarLot()
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
 # print(CarLot.add_to_fleet("fleet_same_order.csv"))
 # print(CarLot.add_to_fleet("fleet_different_order.csv"))
 
+# Test for fleet size
 # print(lot.get_fleet_size())
+
+# Test for get cars by brand
+# print(lot.get_all_cars_by_brand("Chevrolet"))
+
 
