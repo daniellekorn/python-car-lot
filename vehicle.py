@@ -26,9 +26,9 @@ class Vehicles:
         return True
 
 
-
-print(Vehicles.update_vehicle_by_id("1B3CB9HA5BD797092", brand=1, myarg2="two", myarg3=3))
-
+#
+# print(Vehicles.update_vehicle_by_id("1B3CB9HA5BD797092", brand=1, myarg2="two", myarg3=3))
+#
 
 
 

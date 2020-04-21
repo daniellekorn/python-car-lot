@@ -1,4 +1,4 @@
-user_id,first,last,password,position,salary,role
+user_id,first_name,last_name,password,position,salary,role
 98082ed5-54f4-468b-adac-b089fe3438b6,Ezra,Ghirardi,o2oQNhL4Ii,at,45333,admin
 82e5d5f3-6d37-400c-8f92-534e3fb4d09a,Gaynor,Catherick,wUQzIQdp0Z,nulla suscipit,61553,dealer
 c8121027-0835-4e2c-9355-142d33cbd9c9,Constancy,Hans,fr6YSKFLd,consequat in,8892,car owner

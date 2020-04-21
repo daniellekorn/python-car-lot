@@ -65,7 +65,22 @@ class User:
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
+    @classmethod
+    def add_user(cls, user_id, **kwargs):
+        valid_headers = definitions.file_data.get("user").get("columns")
+        valid_values = [(key, kwargs[key]) for key in kwargs if key in valid_headers]
+        file_data = cls.user_file_handler.load_dict_csv()
+        all_users = []
+        other_users = [row for row in file_data if row['user_id'] != user_id]
+        for row in file_data:
+            if user_id == row['user_id']:
+                for (key, value) in valid_values:
+                    row[key] = value
+                all_users.append(row)
+        all_users.append(other_users)
+        # need to write back to csv here
+
 
 users = User()
 users.load_current_users()
-print(users.user_auth("Ganny", "M5ccdvIdu"))
+# User.add_user(user_id='98082ed5-54f4-468b-adac-b089fe3438b6', first_name="Danielle", last_name="Korn")
