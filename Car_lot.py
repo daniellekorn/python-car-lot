@@ -64,9 +64,13 @@ class CarLot:
         return len(self.__vehicles)
 
     def get_all_cars_by_brand(self, brand):
-        brand_pos = definitions.file_data.get("vehicle").get("columns").index("brand")
-        wanted = [row for row in self.__vehicles if row[brand_pos] == brand]
-        return wanted
+        try:
+            brand_pos = definitions.file_data.get("vehicle").get("columns").index("brand")
+            wanted = [row for row in self.__vehicles if row[brand_pos] == brand]
+            return len(wanted)
+        except Exception as e:
+            print("Error: " + str(e))
+
 
 
 lot = CarLot()
