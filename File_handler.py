@@ -3,12 +3,14 @@ from csv import DictWriter
 from pathlib import Path
 import os
 import csv
+from operator import itemgetter
+import definitions
 
 
 class FileHandler:
     __csv_data = None
 
-    def __init__(self, file_name=""):
+    def __init__(self, file_name):
         if self.__csv_data is None:
             self.__csv_data = []
         main_dir = str(Path(__file__).parent)
@@ -96,10 +98,19 @@ class FileHandler:
             not_matching_members.append(revised_user)
             return not_matching_members
 
+    # made to only sort files we already have stored (i.e.: user, vehicle, car_lot)
+    def sort_by_key(self, key):
+        try:
+            key_pos = definitions.file_data.get(self.file_name[:-4]).get("columns").index(key)
+            file_data = self.load_from_csv()
+            return sorted(file_data, key=itemgetter(key_pos))
+        except Exception as e:
+            print("Error: " + str(e))
 
 
-# # Test
+# Test for sort
 # users = FileHandler("user.csv")
-# print(users.get_columns())
-# print(users._csv_path)
-# print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))
+# print(users.sort_by_key("first_name"))
+# print(users.sort_by_key("last_name"))
+# print(users.sort_by_key("role"))
+
