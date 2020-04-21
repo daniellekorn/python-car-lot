@@ -1,4 +1,5 @@
 from csv import reader
+from csv import DictReader
 from csv import DictWriter
 from pathlib import Path
 import os
@@ -34,11 +35,28 @@ class FileHandler:
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
+    def load_dict_csv(self):
+        try:
+            with open(self._csv_path) as file:
+                csv_reader = DictReader(file)
+                file_data = list(csv_reader)
+                return file_data
+        except FileNotFoundError:
+            print("FileNotFoundError: No such file exists.")
+        except OSError:
+            print("OSError: Bad file descriptor. Type must be string.")
+
     def write_to_csv(self, updated_data):
         with open(self._csv_path, "w") as output:
             writer = csv.writer(output)
             for item in updated_data:
                 writer.writerow(item)
+
+    def write_dict_csv(self, data):
+        with open(self._csv_path, 'w') as outfile:
+            fp = csv.DictWriter(outfile, data[0].keys())
+            fp.writeheader()
+            fp.writerows(data)
 
     def append_to_csv_new(self, updated_data):
         with open(self._csv_path, "a") as output:
