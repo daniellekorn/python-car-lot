@@ -31,8 +31,8 @@ class CarLot:
 
 
 
-
 # CarLot.add_to_fleet("/Users/daniellekorn/Downloads/mock.csv")
 lot = CarLot()
-print(lot.update_salary_by_name(56, 'sam'))
-print(lot.update_salary_by_name(54, 'dorgon'))
+# print(lot.update_salary_by_name(56, 'sam'))
+# print(lot.update_salary_by_name(54, 'dorgon'))
+lot.get_fleet_size("/Users/daniellekorn/Downloads/mock.csv")

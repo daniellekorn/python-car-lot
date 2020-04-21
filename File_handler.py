@@ -31,9 +31,6 @@ class FileHandler:
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
-    def get_data(self):
-        return self.__csv_data
-
     def write_to_csv(self, updated_data):
         with open(self._csv_path, "w") as output:
             writer = csv.writer(output)

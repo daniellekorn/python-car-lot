@@ -1,19 +1,25 @@
 from csv import DictReader
 from file_handler import FileHandler
+import definitions
 
 
 class User:
     user_file_handler = FileHandler("user.csv")
-    _users = user_file_handler.get_data()
+    __users = None
+    num_users = 0
 
-    def __init__(self, user_id, first, last, password):
-        self._user_id = user_id
-        self.first = first
-        self.last = last
-        self._password = password
+    def __init__(self):
+        if self.__users is None:
+            self.__users = []
+        self.__users = self.user_file_handler.get_data()
+        # think I want to move this to separate class:
+        # self._user_id = user_id
+        # self.first = first
+        # self.last = last
+        # self._password = password
 
     def __repr__(self):
-        return f"User {self.first} {self.last}"
+        return f"Obj holding {self.num_users} users"
 
     @property
     def password(self):
@@ -37,22 +43,29 @@ class User:
         else:
             return False
 
-    @staticmethod
-    def user_auth(name, password):
+    def load_current_users(self):
+        return self.user_file_handler.load_from_csv()
+
+    def user_auth(self, name, password):
         try:
-            with open("/CSV/User") as file:
-                csv_reader = DictReader(file)
-                for user in csv_reader:
-                    if (name == user['last'] or name == user['first'] or name == user['first'] + " " + user['last']) \
-                            and password == user['password']:
-                        return f"User role: {user['role']}"
-                    else:
-                        continue
-                return False
+            first_name_pos = definitions.file_data.get("user").get("columns").index("first_name")
+            last_name_pos = definitions.file_data.get("user").get("columns").index("last_name")
+            password_pos = definitions.file_data.get("user").get("columns").index("password")
+            role_pos = definitions.file_data.get("user").get("columns").index("role")
+
+            for user in self.__users:
+                if (name == user[last_name_pos] or name == user[first_name_pos] or name == user[first_name_pos] +
+                        " " + user[last_name_pos]) and password == user[password_pos]:
+                    return f"User role: {user[role_pos]}"
+                else:
+                    continue
+            return False
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
 
-print(User._users)
+users = User()
+users.load_current_users()
+print(users.user_auth("Ganny", "M5ccdvIdu"))
