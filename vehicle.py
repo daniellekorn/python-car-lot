@@ -42,8 +42,6 @@ class Vehicles:
 
 vehicle = Vehicles()
 print(vehicle.get_time_to_test('1G6AB5R37D0832002'))
-# print(Vehicles.update_vehicle_by_id("1B3CB9HA5BD797092", brand=1, myarg2="two", myarg3=3))
-#
 
 
 
