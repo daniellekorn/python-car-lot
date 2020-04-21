@@ -60,10 +60,16 @@ class CarLot:
         else:
             return False
 
+    def get_fleet_size(self):
+        return len(self.__vehicles)
+
+
 
 # Test cases Add to Fleet
 # lot = CarLot()
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
 # print(CarLot.add_to_fleet("fleet_same_order.csv"))
 # print(CarLot.add_to_fleet("fleet_different_order.csv"))
+
+# print(lot.get_fleet_size())
 
