@@ -37,6 +37,13 @@ class FileHandler:
             for item in updated_data:
                 writer.writerow(item)
 
+    def append_to_csv_new(self, updated_data):
+        with open(self._csv_path, "a") as output:
+            writer = csv.writer(output)
+            for item in updated_data:
+                writer.writerow(item)
+
+    # old function, less reusable (edit)
     def append_to_csv(self, data):
         file_data = self.load_from_csv()
         existing_headers = file_data[0]
@@ -91,6 +98,7 @@ class FileHandler:
 
 
 # # Test
-# users = FileHandler("user")
+# users = FileHandler("user.csv")
+# print(users.get_columns())
 # print(users._csv_path)
 # print(users.loop_through_and(FileHandler.remove_from_csv, '0f9860b0-502f-448e-9899-0017b5f81450', "hello"))

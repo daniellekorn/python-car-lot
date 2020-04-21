@@ -8,7 +8,7 @@ file_data = {
     },
     "vehicle": {
         "file_name": "vehicle.csv",
-        "columns": ("id", "brand", "owner", "last_test", "color", "door_count")
+        "columns": ("id", "brand", "owner", "last_test", "color", "door_count", "year")
     },
     "car_lot": {
         "file_name": "car_lot.csv",
