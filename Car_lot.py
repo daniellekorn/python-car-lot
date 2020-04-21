@@ -52,12 +52,16 @@ class CarLot:
         required_details = definitions.file_data.get("vehicle").get("columns")
         provided_details = file_data[0]
         if collections.Counter(required_details) == collections.Counter(provided_details):
+            # add to vehicle csv file
             cls.vehicle_handler.append_to_csv_new(file_data[1:])
+            # updated stored list of csv file data inside the class itself
+            cls.__vehicles = cls.vehicle_handler.get_data()
             return True
         else:
             return False
 
-# # Test cases Add to Fleet
+
+# Test cases Add to Fleet
 # lot = CarLot()
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
 # print(CarLot.add_to_fleet("fleet_same_order.csv"))

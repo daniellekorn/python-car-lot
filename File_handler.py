@@ -16,6 +16,7 @@ class FileHandler:
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
 
     def get_data(self):
+        self.load_from_csv()
         return self.__csv_data
 
     def load_from_csv(self):
