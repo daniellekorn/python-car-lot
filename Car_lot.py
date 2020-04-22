@@ -8,7 +8,7 @@ class CarLot:
     vehicle_handler = FileHandler("vehicle.csv")
     user_handler = FileHandler("user.csv")
     __vehicles = []
-    __employees = []
+    __employees = [{'last_name': 'Loleta Cutchie'}]
 
     def __init__(self):
         self.__vehicles = self.vehicle_handler.get_data()
@@ -98,12 +98,15 @@ class CarLot:
         else:
             return f"Employee {name} owns a {search_employee[0][brand_pos]}"
 
-    def all_employees_with_car(self, names_of_employees):
-        pass
+    def all_employees_with_car(self):
+        for employee in self.__employees:
+            answer = self.does_employee_have_car(employee['last_name'])
+            print(answer)
+
 
 lot = CarLot()
 # print(lot.get_all_cars_by_filter(and_or="or", brand="Toyota"))
-print(lot.does_employee_have_car("Lucina McCaughen"))
+print(lot.all_employees_with_car())
 
 # Test cases Add to Fleet
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
