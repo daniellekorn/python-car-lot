@@ -108,6 +108,14 @@ class CarLot:
                 employees.append(answer)
         return employees
 
+    def get_all_employee_who_own_car_brand(self, brand):
+        employees_with_brand = []
+        employees_with_cars = self.all_employees_with_car()
+        for employee in employees_with_cars:
+            answer = self.get_all_cars_by_filter(name=employee, brand=brand)
+            employees_with_brand.append(answer)
+        return employees_with_brand
+
 
 
 lot = CarLot()
