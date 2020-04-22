@@ -71,9 +71,20 @@ class CarLot:
         except Exception as e:
             print("Error: " + str(e))
 
+    def how_many_own_more_then_one_car(self):
+        owner_pos = definitions.file_data.get("vehicle").get("columns").index("owner")
+        file_data = self.vehicle_handler.load_from_csv()
+        all_owners = [row[owner_pos] for row in file_data]
+        owners_of_more_than_one_car = [name for name in all_owners if all_owners.count(name) > 1]
+        # remove duplicate names
+        return list(set(owners_of_more_than_one_car))
+
 
 
 lot = CarLot()
+# Only Loleta Cutchie should own more than 1
+print(lot.how_many_own_more_then_one_car())
+
 # Test cases Add to Fleet
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
 # print(CarLot.add_to_fleet("fleet_same_order.csv"))
