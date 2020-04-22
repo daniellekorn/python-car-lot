@@ -88,9 +88,22 @@ class CarLot:
                     relevant_vehicles.append(row)
                     return relevant_vehicles
 
+    def does_employee_have_car(self, name):
+        owner_pos = definitions.file_data.get("vehicle").get("columns").index("owner")
+        brand_pos = definitions.file_data.get("vehicle").get("columns").index("brand")
+        file_data = self.vehicle_handler.load_from_csv()
+        search_employee = [row for row in file_data if row[owner_pos] == name]
+        if len(search_employee) == 0:
+            return False
+        else:
+            return f"Employee {name} owns a {search_employee[0][brand_pos]}"
+
+    def all_employees_with_car(self, names_of_employees):
+        pass
 
 lot = CarLot()
-print(lot.get_all_cars_by_filter(brand="Toyota"))
+# print(lot.get_all_cars_by_filter(and_or="or", brand="Toyota"))
+print(lot.does_employee_have_car("Lucina McCaughen"))
 
 # Test cases Add to Fleet
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
