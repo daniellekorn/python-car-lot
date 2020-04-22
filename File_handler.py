@@ -67,24 +67,6 @@ class FileHandler:
                 writer.writerow(item)
         self.refresh_data()
 
-    # old function, less reusable (edit)
-    def append_to_csv(self, data):
-        existing_headers = self.__csv_data[0]
-        existing_ids = []
-        for item in self.__csv_data[1:]:
-            existing_ids.append(item[0])
-        with open(self._csv_path, "a") as file:
-            try:
-                csv_writer = DictWriter(file, fieldnames=existing_headers)
-                if "user_id" not in data:
-                    raise ValueError("ValueError: User must have valid ID")
-                elif data["user_id"] in existing_ids:
-                    raise ValueError("ValueError: ID taken. Provide new, valid user ID.")
-                else:
-                    csv_writer.writerow(data)
-            except ValueError as e:
-                return e
-
     @staticmethod
     def data_join(**kwargs):
         pass
