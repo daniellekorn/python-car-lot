@@ -12,9 +12,7 @@ class CarLot:
     __employees = []
 
     def __init__(self):
-        self.vehicle_handler.load_from_csv()
         self.__vehicles = self.vehicle_handler.get_data()
-        self.user_handler.load_from_csv()
         self.__users = self.user_handler.get_data()
 
     def load_employee_data(self, *args):

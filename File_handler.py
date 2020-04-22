@@ -17,6 +17,8 @@ class FileHandler:
         main_dir = str(Path(__file__).parent)
         self.file_name = file_name
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
+        # get current info right away on instantiation
+        self.load_from_csv()
 
     def get_data(self):
         return self.__csv_data
@@ -106,7 +108,6 @@ class FileHandler:
 
 # Tests
 users = FileHandler("user.csv")
-users.update_based_on_id('944767c2-1b11-4dec-b87e-3666958a39f1')
 # print(users.sort_by_key("first_name"))
 # print(users.sort_by_key("last_name"))
 # print(users.sort_by_key("role"))

@@ -17,9 +17,6 @@ class User:
     def __repr__(self):
         return f"Obj holding {self.num_users} users"
 
-    def load_current_users(self):
-        return self.user_file_handler.load_from_csv()
-
     def user_auth(self, name, password):
         try:
             first_name_pos = definitions.file_data.get("user").get("columns").index("first_name")
