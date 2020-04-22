@@ -8,10 +8,12 @@ class CarLot:
     vehicle_handler = FileHandler("vehicle.csv")
     user_handler = FileHandler("user.csv")
     __vehicles = []
-    __employees = [{'last_name': 'Loleta Cutchie'}]
+    __employees = []
 
     def __init__(self):
         self.__vehicles = self.vehicle_handler.get_data()
+        self.all_users = self.user_handler.load_dict_csv()
+        self.__employees = [row for row in self.all_users if row['role'] == 'employee']
 
     def load_car_data(self, *args):
         pass
@@ -99,9 +101,13 @@ class CarLot:
             return f"Employee {name} owns a {search_employee[0][brand_pos]}"
 
     def all_employees_with_car(self):
+        employees = []
         for employee in self.__employees:
-            answer = self.does_employee_have_car(employee['last_name'])
-            print(answer)
+            answer = self.does_employee_have_car(f"{employee['first_name']} {employee['last_name']}")
+            if answer:
+                employees.append(answer)
+        return employees
+
 
 
 lot = CarLot()
