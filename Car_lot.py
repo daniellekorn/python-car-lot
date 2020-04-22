@@ -79,11 +79,16 @@ class CarLot:
         # remove duplicate names
         return list(set(owners_of_more_than_one_car))
 
+    def get_all_cars_by_filter(self, and_or="and", **kwargs):
+        file_data = self.vehicle_handler.load_dict_csv()
+        for row in file_data:
+            for key, value in kwargs.items():
+                if value == row[key]:
+                    return "found"
 
 
 lot = CarLot()
-# Only Loleta Cutchie should own more than 1
-print(lot.how_many_own_more_then_one_car())
+print(lot.get_all_cars_by_filter(brand="Toyota"))
 
 # Test cases Add to Fleet
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))
