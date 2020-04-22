@@ -15,7 +15,7 @@ class CarLot:
         self.__vehicles = self.vehicle_handler.get_data()
         self.__users = self.user_handler.get_data()
 
-    def load_employee_data(self, *args):
+    def load_employee_data(self):
         self.user_handler.load_dict_csv()
         all_users = self.user_handler.get_data()
         self.__employees = [row for row in all_users if row['role'] == 'employee']
