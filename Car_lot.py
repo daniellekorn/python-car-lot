@@ -29,7 +29,7 @@ class CarLot:
         first_name_pos = definitions.file_data.get("user").get("columns").index("first_name")
         last_name_pos = definitions.file_data.get("user").get("columns").index("last_name")
         salary_pos = definitions.file_data.get("user").get("columns").index("salary")
-        file_data = self.user_handler.load_from_csv()
+        self.user_handler.get_data()
 
         for row in file_data:
             if row[last_name_pos].lower() == name or f"{row[first_name_pos]} {row[last_name_pos]}".lower() == name:
@@ -81,6 +81,7 @@ class CarLot:
         # remove duplicate names
         return list(set(owners_of_more_than_one_car))
 
+    # struggling here w/ kwargs
     def get_all_cars_by_filter(self, and_or="and", **kwargs):
         file_data = self.vehicle_handler.load_dict_csv()
         relevant_vehicles = []
@@ -88,7 +89,7 @@ class CarLot:
             for row in file_data:
                 if value == row[key]:
                     relevant_vehicles.append(row)
-                    return relevant_vehicles
+        return relevant_vehicles
 
     def does_employee_have_car(self, name):
         owner_pos = definitions.file_data.get("vehicle").get("columns").index("owner")
@@ -117,10 +118,11 @@ class CarLot:
         return employees_with_brand
 
 
-
 lot = CarLot()
-# print(lot.get_all_cars_by_filter(and_or="or", brand="Toyota"))
-print(lot.all_employees_with_car())
+print(lot.get_all_cars_by_filter(brand='Chevrolet'))
+# print(lot.all_employees_with_car())
+
+
 
 # Test cases Add to Fleet
 # print(CarLot.add_to_fleet("fleet_missing_info.csv"))

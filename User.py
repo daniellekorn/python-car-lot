@@ -1,6 +1,7 @@
 from csv import DictReader
 from file_handler import FileHandler
 import definitions
+import json
 
 
 class User:
@@ -12,36 +13,9 @@ class User:
         if self.__users is None:
             self.__users = []
         self.__users = self.user_file_handler.get_data()
-        # think I want to move this to separate class:
-        # self._user_id = user_id
-        # self.first = first
-        # self.last = last
-        # self._password = password
 
     def __repr__(self):
         return f"Obj holding {self.num_users} users"
-
-    @property
-    def password(self):
-        return self._password
-
-    @password.setter
-    def password(self, new_password):
-        if isinstance(new_password, str):
-            if self.__valid_password_length(new_password):
-                self._password = new_password
-            else:
-                raise ValueError("Password must be between 4-12 characters")
-        else:
-            raise TypeError("Password must be type string")
-
-    @staticmethod
-    def __valid_password_length(password):
-        length = len(password)
-        if 4 < length < 12:
-            return True
-        else:
-            return False
 
     def load_current_users(self):
         return self.user_file_handler.load_from_csv()
@@ -78,9 +52,12 @@ class User:
                     row[key] = value
                 all_users.append(row)
         all_users.append(other_users)
+        json_users = json.dumps(all_users)
+        to_write = json.loads(json_users)
+        print(to_write)
         # need to write back to csv here
 
 
 users = User()
 users.load_current_users()
-# User.add_user(user_id='98082ed5-54f4-468b-adac-b089fe3438b6', first_name="Danielle", last_name="Korn")
+print(User.add_user(user_id='98082ed5-54f4-468b-adac-b089fe3438b6', first_name="Tom", last_name="Rittler"))

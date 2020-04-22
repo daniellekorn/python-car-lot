@@ -17,19 +17,17 @@ class FileHandler:
         main_dir = str(Path(__file__).parent)
         self.file_name = file_name
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
+        self.load_from_csv()
 
     def get_data(self):
-        self.load_from_csv()
         return self.__csv_data
 
     def load_from_csv(self):
         try:
             with open(self._csv_path) as file:
                 csv_reader = reader(file)
-                file_data = list(csv_reader)
-                for row in file_data:
+                for row in csv_reader:
                     self.__csv_data.append(row)
-                return file_data
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
@@ -39,8 +37,8 @@ class FileHandler:
         try:
             with open(self._csv_path) as file:
                 csv_reader = DictReader(file)
-                file_data = list(csv_reader)
-                return file_data
+                for row in csv_reader:
+                    self.__csv_data.append(row)
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
@@ -66,10 +64,9 @@ class FileHandler:
 
     # old function, less reusable (edit)
     def append_to_csv(self, data):
-        file_data = self.load_from_csv()
-        existing_headers = file_data[0]
+        existing_headers = self.__csv_data[0]
         existing_ids = []
-        for item in file_data[1:]:
+        for item in self.__csv_data[1:]:
             existing_ids.append(item[0])
         with open(self._csv_path, "a") as file:
             try:
@@ -88,19 +85,14 @@ class FileHandler:
         pass
 
     def loop_through_and(self, func, user_id, new_data=""):
-        try:
-            file_data = self.load_from_csv()
-        except FileNotFoundError:
-            print("FileNotFoundError: Please input an appropriate path.")
+        current_data = [row for row in self.__csv_data]
+        updated_data = func(self.__csv_data, user_id, new_data)
+        self.__csv_data = [item for item in updated_data]
+        self.write_to_csv(updated_data)
+        if updated_data != current_data:
+            return True
         else:
-            current_data = [row for row in file_data]
-            updated_data = func(file_data, user_id, new_data)
-            self.__csv_data = [item for item in updated_data]
-            self.write_to_csv(updated_data)
-            if updated_data != current_data:
-                return True
-            else:
-                return False
+            return False
 
     @staticmethod
     def remove_from_csv(file_data, user_id, new_data=""):
@@ -120,14 +112,28 @@ class FileHandler:
     def sort_by_key(self, key):
         try:
             key_pos = definitions.file_data.get(self.file_name[:-4]).get("columns").index(key)
-            file_data = self.load_from_csv()
-            return sorted(file_data, key=itemgetter(key_pos))
+            return sorted(self.__csv_data, key=itemgetter(key_pos))
         except Exception as e:
             print("Error: " + str(e))
 
+    def update_based_on_id(self, id_num, **kwargs):
+        valid_headers = definitions.file_data.get("vehicle").get("columns")
+        valid_values = [(key, kwargs[key]) for key in kwargs if key in valid_headers]
+        all_vehicles = []
+        other_vehicles = [row for row in self.__csv_data if row[0] != id_num]
+        for row in self.__csv_data:
+            if id_num == row[0]:
+                for (key, value) in valid_values:
+                    row[key] = value
+                all_vehicles.append(row)
+        all_vehicles.append(other_vehicles)
+        print(all_vehicles)
+    # cls.vehicle_file_handler.write_dict_csv(all_vehicles)
 
-# Test for sort
-# users = FileHandler("user.csv")
+
+# Tests
+users = FileHandler("user.csv")
+users.update_based_on_id('944767c2-1b11-4dec-b87e-3666958a39f1')
 # print(users.sort_by_key("first_name"))
 # print(users.sort_by_key("last_name"))
 # print(users.sort_by_key("role"))
