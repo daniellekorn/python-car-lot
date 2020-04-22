@@ -81,10 +81,12 @@ class CarLot:
 
     def get_all_cars_by_filter(self, and_or="and", **kwargs):
         file_data = self.vehicle_handler.load_dict_csv()
-        for row in file_data:
-            for key, value in kwargs.items():
+        relevant_vehicles = []
+        for key, value in kwargs.items():
+            for row in file_data:
                 if value == row[key]:
-                    return "found"
+                    relevant_vehicles.append(row)
+                    return relevant_vehicles
 
 
 lot = CarLot()
