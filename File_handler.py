@@ -17,13 +17,13 @@ class FileHandler:
         main_dir = str(Path(__file__).parent)
         self.file_name = file_name
         self._csv_path = f"{main_dir}{os.sep}CSV{os.sep}{self.file_name}"
-        self.load_from_csv()
 
     def get_data(self):
         return self.__csv_data
 
     def load_from_csv(self):
         try:
+            self.__csv_data = []
             with open(self._csv_path) as file:
                 csv_reader = reader(file)
                 for row in csv_reader:
@@ -37,30 +37,35 @@ class FileHandler:
         try:
             with open(self._csv_path) as file:
                 csv_reader = DictReader(file)
-                for row in csv_reader:
-                    self.__csv_data.append(row)
+                return list(csv_reader)
         except FileNotFoundError:
             print("FileNotFoundError: No such file exists.")
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
+
+    def refresh_data(self):
+        self.load_from_csv()
 
     def write_to_csv(self, updated_data):
         with open(self._csv_path, "w") as output:
             writer = csv.writer(output)
             for item in updated_data:
                 writer.writerow(item)
+        self.refresh_data()
 
     def write_dict_csv(self, data):
         with open(self._csv_path, 'w') as outfile:
             fp = csv.DictWriter(outfile, data[0].keys())
             fp.writeheader()
             fp.writerows(data)
+        self.refresh_data()
 
     def append_to_csv_new(self, updated_data):
         with open(self._csv_path, "a") as output:
             writer = csv.writer(output)
             for item in updated_data:
                 writer.writerow(item)
+        self.refresh_data()
 
     # old function, less reusable (edit)
     def append_to_csv(self, data):
