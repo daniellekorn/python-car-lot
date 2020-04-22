@@ -55,7 +55,7 @@ class CarLot:
         required_details = definitions.file_data.get("vehicle").get("columns")
         if collections.Counter(required_details) == collections.Counter(provided_details):
             # add to vehicle csv file
-            self.vehicle_handler.append_to_csv_new(data.get_data()[1:])
+            self.vehicle_handler.append_to_csv(data.get_data()[1:])
             return True
         else:
             return False

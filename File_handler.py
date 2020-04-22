@@ -60,7 +60,7 @@ class FileHandler:
             fp.writerows(data)
         self.refresh_data()
 
-    def append_to_csv_new(self, updated_data):
+    def append_to_csv(self, updated_data):
         with open(self._csv_path, "a") as output:
             writer = csv.writer(output)
             for item in updated_data:
@@ -102,20 +102,6 @@ class FileHandler:
             return sorted(self.__csv_data, key=itemgetter(key_pos))
         except Exception as e:
             print("Error: " + str(e))
-
-    def update_based_on_id(self, id_num, **kwargs):
-        valid_headers = definitions.file_data.get("vehicle").get("columns")
-        valid_values = [(key, kwargs[key]) for key in kwargs if key in valid_headers]
-        all_vehicles = []
-        other_vehicles = [row for row in self.__csv_data if row[0] != id_num]
-        for row in self.__csv_data:
-            if id_num == row[0]:
-                for (key, value) in valid_values:
-                    row[key] = value
-                all_vehicles.append(row)
-        all_vehicles.append(other_vehicles)
-        print(all_vehicles)
-    # cls.vehicle_file_handler.write_dict_csv(all_vehicles)
 
 
 # Tests
