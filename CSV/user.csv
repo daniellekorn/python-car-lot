@@ -1,14 +1,12 @@
 user_id,first_name,last_name,password,position,salary,role
-98082ed5-54f4-468b-adac-b089fe3438b6,Ezra,Ghirardi,o2oQNhL4Ii,at,45333,admin
 82e5d5f3-6d37-400c-8f92-534e3fb4d09a,Gaynor,Catherick,wUQzIQdp0Z,nulla suscipit,61553,dealer
 c8121027-0835-4e2c-9355-142d33cbd9c9,Constancy,Hans,fr6YSKFLd,consequat in,8892,car owner
 8e680a19-7e05-4424-b0be-459af7fe10e1,Anett,Kordas,ecOsblWQ,consequat,49326,car owner
 2531f745-a420-4db1-8b2f-841007d1be97,Bebe,Clampe,gU1F1KqG,interdum in,43966,car owner
 924932c1-8d57-418d-86ed-a79010655604,Ganny,Crathern,M5ccdvIdu,sapien,4137,employee
 9f079d7f-7a80-4e17-a3a8-0cf139e626fd,Melinde,Ritzman,XmPYPbJOD53,turpis sed,54679,employee
-8ccfd062-a0c4-4570-a38d-1199c838248f,Jessie,Robiou,31Xqs4COB,sapien a,28356,admin
+8ccfd062-a0c4-4570-a38d-1199c838248f,Sam,Korn,31Xqs4COB,sapien a,28356,admin
 af364e96-3d68-4609-9cfd-641b4e2062f0,Elmo,Hasnney,ddUnSvC6,mattis nibh,69388,dealer
-a5c6b343-e72a-45f2-9ae5-512136fcfd42,Star,Beyne,8qZ2O2fH,turpis eget,78219,admin
 e3e138bd-50c7-440c-96a3-3b544bfccd5b,Paxon,Capnerhurst,1tiaEg,vel est,40022,dealer
 c330db04-37fe-4e1a-919e-5e14f848f228,Rhianna,Laker,Lbk5LdacJEPG,lacinia,41308,employee
 96b3922d-31de-4d64-b94d-fa7cdab9d87c,Virginia,Kaaskooper,R6cewgj,rutrum at,4254,investor
@@ -47,4 +45,3 @@ c4100982-baaf-4d1e-a689-a0de312cc7b0,Ravid,Costellow,wEgTfs,quisque porta,51396,
 7ddb0442-5d47-4eef-97b9-bdde922bfdde,Isabel,Swaffield,f3qnnUfV,nam nulla,57059,car owner
 e6395f72-563e-4b50-b0dc-051de87df7f5,Hubie,Lowen,wmS3jZq,sapien placerat,12827,car owner
 8203f42e-4b66-4303-b693-ade38f023ca6,Aymer,McKennan,OaURcxBp,vestibulum ante,57688,employee
-a5c6b343-e72a-45f2-9ae5-512136fcfd42,Star,Beyne,8qZ2O2fH,turpis eget,78219,admin

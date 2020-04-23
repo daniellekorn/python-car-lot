@@ -5,7 +5,7 @@ import json
 
 
 class User:
-    user_file_handler = FileHandler("user.csv")
+    user_file_handler = FileHandler("user")
     __users = None
     num_users = 0
 
@@ -36,25 +36,25 @@ class User:
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
-    @classmethod
-    def add_user(cls, user_id, **kwargs):
+    def add_user(self, user_id, **kwargs):
         valid_headers = definitions.file_data.get("user").get("columns")
-        valid_values = [(key, kwargs[key]) for key in kwargs if key in valid_headers]
-        file_data = cls.user_file_handler.load_dict_csv()
-        all_users = []
-        other_users = [row for row in file_data if row['user_id'] != user_id]
-        for row in file_data:
-            if user_id == row['user_id']:
-                for (key, value) in valid_values:
-                    row[key] = value
-                all_users.append(row)
-        all_users.append(other_users)
-        json_users = json.dumps(all_users)
-        to_write = json.loads(json_users)
-        print(to_write)
-        # need to write back to csv here
+        kwargs = dict(kwargs)
+        for i in self.__users:
+            if i[0] == user_id:
+                raise ValueError("User Id taken")
+        for arg in kwargs:
+            if arg not in valid_headers:
+                return False
+            elif len(kwargs) < len(valid_headers) - 1:
+                return False
+            else:
+                print(self.__users)
+                user = [kwargs.get(arg) for arg in kwargs]
+                user.insert(0, user_id)
+                self.user_file_handler.append_single(user)
+            return True
 
 
 users = User()
-users.load_current_users()
-print(User.add_user(user_id='98082ed5-54f4-468b-adac-b089fe3438b6', first_name="Tom", last_name="Rittler"))
+# print(users.add_user('98082ed5-54f4-468b-adac-b089fe38b6', first_name="Tom", last_name="Rittler", password="jfsdfnad",
+#                     position="doorman", salary=3434, role="employee"))
