@@ -38,7 +38,6 @@ class User:
 
     def add_user(self, user_id, **kwargs):
         valid_headers = definitions.file_data.get("user").get("columns")
-        kwargs = dict(kwargs)
         for i in self.__users:
             if i[0] == user_id:
                 raise ValueError("User Id taken")

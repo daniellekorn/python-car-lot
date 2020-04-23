@@ -14,7 +14,6 @@ class Vehicles:
     @classmethod
     def update_vehicle_by_id(cls, vehicle_id, **kwargs):
         valid_headers = definitions.file_data.get("vehicle").get("columns")
-        kwargs = dict(kwargs)
         for arg in kwargs:
             if arg not in valid_headers:
                 return False
@@ -36,7 +35,7 @@ class Vehicles:
 
 
 vehicle = Vehicles()
-print(vehicle.update_vehicle_by_id('1G6AB5R37D0832002', brand='Honda', year="1994"))
+print(vehicle.update_vehicle_by_id('1G6AB5R37D0832002', brand='Chevrolet', year="1994"))
 # # print(vehicle.get_time_to_test('1G6AB5R37D0832002'))
 
 
