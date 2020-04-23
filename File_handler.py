@@ -100,10 +100,16 @@ class FileHandler:
         return all_items
 
     # made to only sort files we already have stored (i.e.: user, vehicle, car_lot)
-    def sort_by_key(self, key):
+    def sort_by_key(self, key, direction="up"):
+        reverse_val = False
+        if direction == 'down':
+            reverse_val = True
         try:
-            key_pos = definitions.file_data.get(self.file_name[:-4]).get("columns").index(key)
-            return sorted(self.__csv_data, key=itemgetter(key_pos))
+            key_pos = definitions.file_data.get(self.file_name).get("columns").index(key)
+            return sorted(self.__csv_data, key=itemgetter(key_pos), reverse=reverse_val)
+        except KeyError as e:
+            print(f"{str(e)}: {key} not found.")
+            return False
         except Exception as e:
             print("Error: " + str(e))
 
