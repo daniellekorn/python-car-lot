@@ -80,11 +80,13 @@ class CarLot:
     def get_all_cars_by_filter(self, and_or="and", **kwargs):
         vehicle_dict = self.vehicle_handler.load_dict_csv()
         relevant_vehicles = []
-        for key, value in kwargs.items():
-            for row in vehicle_dict:
-                if value == row[key]:
-                    relevant_vehicles.append(row)
-        return relevant_vehicles
+        if and_or == "or":
+            for key, value in kwargs.items():
+                for row in vehicle_dict:
+                    if value == row[key]:
+                        relevant_vehicles.append(row)
+            return relevant_vehicles
+        # else:
 
     def does_employee_have_car(self, name):
         owner_pos = definitions.file_data.get("vehicle").get("columns").index("owner")
