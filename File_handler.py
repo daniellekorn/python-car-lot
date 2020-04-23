@@ -38,15 +38,15 @@ class FileHandler:
         except OSError:
             print("OSError: Bad file descriptor. Type must be string.")
 
-    def load_dict_csv(self):
-        try:
-            with open(self._csv_path) as file:
-                csv_reader = DictReader(file)
-                return list(csv_reader)
-        except FileNotFoundError:
-            print("FileNotFoundError: No such file exists.")
-        except OSError:
-            print("OSError: Bad file descriptor. Type must be string.")
+    # def load_dict_csv(self):
+    #     try:
+    #         with open(self._csv_path) as file:
+    #             csv_reader = DictReader(file)
+    #             return list(csv_reader)
+    #     except FileNotFoundError:
+    #         print("FileNotFoundError: No such file exists.")
+    #     except OSError:
+    #         print("OSError: Bad file descriptor. Type must be string.")
 
     def write_to_csv(self, updated_data):
         with open(self._csv_path, "w") as output:

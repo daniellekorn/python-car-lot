@@ -5,8 +5,8 @@ import collections
 
 
 class CarLot:
-    vehicle_handler = FileHandler("vehicle.csv")
-    user_handler = FileHandler("user.csv")
+    vehicle_handler = FileHandler("vehicle")
+    user_handler = FileHandler("user")
     __users = []
     __vehicles = []
     __employees = []
@@ -16,9 +16,10 @@ class CarLot:
         self.__users = self.user_handler.get_data()
 
     def load_employee_data(self):
-        self.user_handler.load_dict_csv()
+        role_pos = definitions.file_data.get("user").get("columns").index("role")
+        self.user_handler.load_from_csv()
         all_users = self.user_handler.get_data()
-        self.__employees = [row for row in all_users if row['role'] == 'employee']
+        self.__employees = [row for row in all_users if row[role_pos] == 'employee']
         return self.__employees
 
     # need to return t/f and add error handling
@@ -76,17 +77,20 @@ class CarLot:
         # remove duplicate names
         return list(set(owners_of_more_than_one_car))
 
-    # struggling here w/ kwargs
     def get_all_cars_by_filter(self, and_or="and", **kwargs):
-        vehicle_dict = self.vehicle_handler.load_dict_csv()
-        relevant_vehicles = []
         if and_or == "or":
-            for key, value in kwargs.items():
-                for row in vehicle_dict:
-                    if value == row[key]:
-                        relevant_vehicles.append(row)
-            return relevant_vehicles
-        # else:
+            matches = [row for row in self.__vehicles for k, v in kwargs.items() if v in row]
+        else:
+            matches = []
+            for row in self.__vehicles:
+                all_match = True
+                for k, v in kwargs.items():
+                    cur_key = definitions.file_data.get("vehicle").get("columns").index(k)
+                    if row[cur_key].lower() != kwargs[k].lower():
+                        all_match = False
+                if all_match:
+                    matches.append(row)
+        return matches
 
     def does_employee_have_car(self, name):
         owner_pos = definitions.file_data.get("vehicle").get("columns").index("owner")
@@ -116,10 +120,11 @@ class CarLot:
 
 
 lot = CarLot()
+# print(lot.load_employee_data())
 # print(lot.does_employee_have_car('Aymer McKennan'))
 # print(lot.get_all_cars_by_filter(brand='Honda'))
 # print(lot.how_many_own_more_then_one_car())
-# print(lot.get_all_cars_by_filter(brand='Chevrolet'))
+print(lot.get_all_cars_by_filter(and_or="and", brand='Chevrolet', color="Black"))
 # print(lot.update_salary_by_name(4254, 'Kaaskooper'))
 
 
