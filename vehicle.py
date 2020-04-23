@@ -11,14 +11,13 @@ class Vehicles:
     def __init__(self):
         self.__vehicles = self.vehicle_file_handler.get_data()
 
-    @classmethod
-    def update_vehicle_by_id(cls, vehicle_id, **kwargs):
+    def update_vehicle_by_id(self, vehicle_id, **kwargs):
         valid_headers = definitions.file_data.get("vehicle").get("columns")
         for arg in kwargs:
             if arg not in valid_headers:
                 return False
             else:
-                cls.vehicle_file_handler.loop_through_and(FileHandler.update_csv, vehicle_id, kwargs)
+                self.vehicle_file_handler.loop_through_and(FileHandler.update_csv, vehicle_id, kwargs)
             return True
 
     # Google claims car should be tested every year, so this func returns date one year from last test
